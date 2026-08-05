@@ -1,59 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Hệ thống Quản lý Câu lạc bộ, Sự kiện và Điểm hoạt động
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Giới thiệu
 
-## About Laravel
+Đề tài xây dựng hệ thống quản lý câu lạc bộ, sự kiện và điểm hoạt động dành cho sinh viên Trường Đại học Thủy Lợi.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Hệ thống hỗ trợ:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Quản lý câu lạc bộ
+- Quản lý thành viên câu lạc bộ
+- Quản lý sự kiện
+- Duyệt sự kiện
+- Đăng ký tham gia sự kiện
+- Check-in sự kiện
+- Cộng điểm hoạt động
+- Cấp chứng nhận
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Công nghệ sử dụng
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- Laravel 12
+- PHP 8.2
+- MySQL
+- Bootstrap 5
+- Git & GitHub
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Cơ sở dữ liệu
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Database:
 
-### Premium Partners
+```
+club_management
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Tổng số bảng:
 
-## Contributing
+```
+13 bảng
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- users
+- students
+- clubs
+- club_roles
+- club_members
+- event_categories
+- events
+- event_approvals
+- event_registrations
+- checkin_logs
+- activity_point_rules
+- student_points
+- certificates
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Cài đặt project
 
-## Security Vulnerabilities
+Clone project
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+git clone <repository-url>
+```
 
-## License
+Di chuyển vào project
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+cd club_manage
+```
+
+Cài package
+
+```bash
+composer install
+```
+
+Tạo file .env
+
+Windows
+
+```bash
+copy .env.example .env
+```
+
+Linux / macOS
+
+```bash
+cp .env.example .env
+```
+
+Sinh APP_KEY
+
+```bash
+php artisan key:generate
+```
+
+Tạo database
+
+```
+club_management
+```
+
+Chạy migration
+
+```bash
+php artisan migrate
+```
+
+Khởi động server
+
+```bash
+php artisan serve
+```
+
+---
+
+## Phân công thành viên
+
+| Thành viên | Module |
+|------------|--------|
+| Leader | Database + Migration + Relationship + Merge |
+| Thành viên 1 | Quản lý CLB |
+| Thành viên 2 | Quản lý Sự kiện |
+| Thành viên 3 | Đăng ký + Check-in |
+| Thành viên 4 | Điểm + Chứng nhận |
+
+---
+
+## Quy trình làm việc
+
+- Không commit trực tiếp lên main
+- Mỗi thành viên làm trên branch riêng
+- Commit thường xuyên
+- Sau khi hoàn thành tạo Pull Request về develop
+- Leader review và merge
