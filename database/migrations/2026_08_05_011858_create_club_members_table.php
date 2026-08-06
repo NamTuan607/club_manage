@@ -15,25 +15,25 @@ return new class extends Migration
 
         $table->id();
 
-        // CLB
+        
         $table->foreignId('club_id')
               ->constrained('clubs')
               ->cascadeOnDelete();
 
-        // Sinh viên
+        
         $table->foreignId('student_id')
               ->constrained('students')
               ->cascadeOnDelete();
 
-        // Vai trò trong CLB
+        
         $table->foreignId('club_role_id')
               ->constrained('club_roles')
               ->cascadeOnDelete();
 
-        // Ngày tham gia
+        
         $table->date('join_date');
 
-        // Trạng thái
+        
         $table->enum('status',[
             'active',
             'inactive'
