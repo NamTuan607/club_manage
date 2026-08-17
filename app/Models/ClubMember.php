@@ -3,24 +3,32 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ClubMember extends Model
 {
-    use HasFactory;
-    //
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
-    }
+    protected $fillable = [
+        'club_id',
+        'student_id',
+        'club_role_id',
+        'join_date',
+        'leave_date',
+        'status',
+        'academic_year',
+        'note'
+    ];
 
     public function club()
     {
         return $this->belongsTo(Club::class);
     }
 
-    public function role()
+    public function student()
     {
-        return $this->belongsTo(ClubRole::class,'club_role_id');
+        return $this->belongsTo(Student::class);
+    }
+
+    public function clubRole()
+    {
+        return $this->belongsTo(ClubRole::class);
     }
 }

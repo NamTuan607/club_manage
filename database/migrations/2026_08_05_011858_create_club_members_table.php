@@ -13,37 +13,30 @@ return new class extends Migration
 {
     Schema::create('club_members', function (Blueprint $table) {
 
-        $table->id();
+    $table->id();
 
-        
-        $table->foreignId('club_id')
-              ->constrained('clubs')
-              ->cascadeOnDelete();
+    $table->foreignId('club_id')->constrained()->cascadeOnDelete();
 
-        
-        $table->foreignId('student_id')
-              ->constrained('students')
-              ->cascadeOnDelete();
+    $table->foreignId('student_id')->constrained()->cascadeOnDelete();
 
-        
-        $table->foreignId('club_role_id')
-              ->constrained('club_roles')
-              ->cascadeOnDelete();
+    $table->foreignId('club_role_id')->constrained('club_roles');
 
-        
-        $table->date('join_date');
+    $table->date('join_date');
 
-        
-        $table->enum('status',[
-            'active',
-            'inactive'
-        ])->default('active');
+    $table->date('leave_date')->nullable();
 
-        $table->timestamps();
+    $table->enum('status',[
+        'active',
+        'inactive',
+        'pending'
+    ])->default('active');
 
-        // Không được tham gia 1 CLB 2 lần
-        $table->unique(['club_id','student_id']);
-    });
+    $table->string('academic_year')->nullable();
+
+    $table->text('note')->nullable();
+
+    $table->timestamps();
+});
 }
 
     /**

@@ -7,6 +7,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Club extends Model
 {
+    protected $fillable = [
+    'name',
+    'short_name',
+    'logo',
+    'description',
+    'email',
+    'phone',
+    'location',
+    'founding_date',
+    'advisor',
+    'president',
+    'max_members',
+    'status'
+];
     use HasFactory;
     //
     public function members()

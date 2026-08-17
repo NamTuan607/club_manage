@@ -15,7 +15,28 @@ return new class extends Migration
         $table->id();
 
         $table->string('name');
+        $table->string('short_name', 20)->nullable();
+        $table->string('logo')->nullable();
+
         $table->text('description')->nullable();
+
+        $table->string('email')->nullable();
+        $table->string('phone',20)->nullable();
+
+        $table->string('location')->nullable();
+
+        $table->date('founding_date')->nullable();
+
+        $table->string('advisor')->nullable();
+
+        $table->string('president')->nullable();
+
+        $table->integer('max_members')->default(100);
+
+        $table->enum('status',[
+            'active',
+            'inactive'
+        ])->default('active');
 
         $table->timestamps();
     });
