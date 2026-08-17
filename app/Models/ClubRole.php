@@ -8,11 +8,7 @@ class ClubRole extends Model
 {
     protected $fillable = [
         'role_name',
-        'description',
-        'permission_level',
-        'can_manage_members',
-        'can_create_events',
-        'can_approve_members'
+        'description'
     ];
 
     public function members()

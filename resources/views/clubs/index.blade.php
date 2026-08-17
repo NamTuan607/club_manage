@@ -10,7 +10,18 @@
 
 <div class="container mt-4">
 
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
     <h2 class="mb-4 text-center">QUẢN LÝ CÂU LẠC BỘ</h2>
+
+    <div class="mb-3 text-end">
+        <a href="{{ route('clubs.create') }}" class="btn btn-success">Tạo mới</a>
+    </div>
 
     {{-- Dashboard --}}
     <div class="row mb-4">
@@ -69,6 +80,7 @@
             <th>Ngày thành lập</th>
             <th>SL tối đa</th>
             <th>Trạng thái</th>
+            <th>Hành động</th>
         </tr>
 
         </thead>
@@ -124,6 +136,15 @@
 
                     @endif
 
+                </td>
+                <td>
+                    <a href="{{ route('clubs.show', $club->id) }}" class="btn btn-sm btn-info">Xem</a>
+                    <a href="{{ route('clubs.edit', $club->id) }}" class="btn btn-sm btn-primary">Sửa</a>
+                    <form action="{{ route('clubs.destroy', $club->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Xác nhận xóa?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger">Xóa</button>
+                    </form>
                 </td>
 
             </tr>

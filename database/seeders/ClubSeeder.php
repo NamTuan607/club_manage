@@ -12,7 +12,7 @@ class ClubSeeder extends Seeder
      */
     public function run(): void
     {
-        Club::insert([
+        $clubs = [
             [
                 'name' => 'CLB Công nghệ thông tin',
                 'short_name' => 'ITC',
@@ -72,6 +72,13 @@ class ClubSeeder extends Seeder
 
                 'status' => 'active',
             ]
-        ]);
+        ];
+
+        foreach ($clubs as $c) {
+            Club::updateOrCreate(
+                ['name' => $c['name']],
+                $c
+            );
+        }
     }
 }
