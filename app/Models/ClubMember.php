@@ -17,6 +17,11 @@ class ClubMember extends Model
         'note'
     ];
 
+    protected $casts = [
+        'join_date' => 'date',
+        'leave_date' => 'date',
+    ];
+
     public function club()
     {
         return $this->belongsTo(Club::class);

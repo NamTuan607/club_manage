@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class EventCategory extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = ['name', 'description', 'max_points', 'status'];
+
+    protected $casts = ['max_points' => 'integer'];
     public function events()
     {
         return $this->hasMany(Event::class,'category_id');

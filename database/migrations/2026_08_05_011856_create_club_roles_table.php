@@ -14,11 +14,13 @@ return new class extends Migration
     Schema::create('club_roles', function (Blueprint $table) {
 
         $table->id();
+        $table->foreignId('club_id')->constrained()->cascadeOnDelete();
 
         $table->string('role_name');
         $table->text('description')->nullable();
-
         $table->timestamps();
+
+        $table->unique(['club_id', 'role_name']);
     });
 }
 

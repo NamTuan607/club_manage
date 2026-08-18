@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ActivityPointRule extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = ['event_category_id', 'points', 'description'];
+
+    protected $casts = ['points' => 'integer'];
     public function category()
     {
         return $this->belongsTo(EventCategory::class);

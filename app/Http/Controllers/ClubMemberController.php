@@ -2,129 +2,103 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\ClubMember;
 use App\Models\Club;
-use App\Models\Student;
+use App\Models\ClubMember;
 use App\Models\ClubRole;
-use Carbon\Carbon;
+use App\Models\Student;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class ClubMemberController extends Controller
 {
     public function index()
     {
-        $members = ClubMember::with([
-            'club',
-            'student',
-            'clubRole'
-        ])->get();
+        $members = ClubMember::with(['club', 'student', 'clubRole'])->latest('join_date')->paginate(12);
 
         return view('club_members.index', compact('members'));
     }
 
     public function create()
     {
-        $clubs = Club::all();
-        $students = Student::all();
-        $roles = ClubRole::all();
-
-        return view('club_members.create', compact('clubs','students','roles'));
+        return view('club_members.create', $this->formData());
     }
 
     public function store(Request $request)
     {
+        ClubMember::create($this->validated($request));
+
+        return redirect()->route('club_members.index')->with('success', 'Đã thêm thành viên vào CLB.');
+    }
+
+    public function show(ClubMember $clubMember)
+    {
+        $clubMember->load(['club', 'student', 'clubRole']);
+
+        return view('club_members.show', compact('clubMember'));
+    }
+
+    public function edit(ClubMember $clubMember)
+    {
+        return view('club_members.edit', ['clubMember' => $clubMember] + $this->formData());
+    }
+
+    public function update(Request $request, ClubMember $clubMember)
+    {
+        $clubMember->update($this->validated($request, $clubMember));
+
+        return redirect()->route('club_members.show', $clubMember)->with('success', 'Đã cập nhật thành viên CLB.');
+    }
+
+    public function destroy(ClubMember $clubMember)
+    {
+        $clubMember->delete();
+
+        return redirect()->route('club_members.index')->with('success', 'Đã xóa thành viên khỏi CLB.');
+    }
+
+    private function formData(): array
+    {
+        return [
+            'clubs' => Club::where('status', 'active')->orderBy('name')->get(),
+            'students' => Student::orderBy('student_code')->get(),
+            'roles' => ClubRole::with('club')->orderBy('club_id')->orderBy('role_name')->get(),
+        ];
+    }
+
+    private function validated(Request $request, ?ClubMember $current = null): array
+    {
         $data = $request->validate([
-            'club_id' => 'required|exists:clubs,id',
-            'student_id' => 'required|exists:students,id',
-            'club_role_id' => 'required|exists:club_roles,id',
-            'join_date' => 'required|date',
-            'leave_date' => 'nullable|date',
-            'status' => 'required|in:active,inactive,pending',
-            'academic_year' => 'nullable|string|max:50',
-            'note' => 'nullable|string'
+            'club_id' => ['required', 'exists:clubs,id'],
+            'student_id' => ['required', 'exists:students,id'],
+            'club_role_id' => ['required', 'exists:club_roles,id'],
+            'join_date' => ['required', 'date'],
+            'leave_date' => ['nullable', 'date', 'after_or_equal:join_date'],
+            'status' => ['required', 'in:active,inactive,pending'],
+            'academic_year' => ['nullable', 'string', 'max:50'],
+            'note' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        // Prevent duplicate membership for same student and club
-        $exists = ClubMember::where('club_id', $data['club_id'])
+        $role = ClubRole::findOrFail($data['club_role_id']);
+        if ((int) $role->club_id !== (int) $data['club_id']) {
+            throw ValidationException::withMessages(['club_role_id' => 'Chức vụ phải thuộc câu lạc bộ đã chọn.']);
+        }
+
+        $duplicate = ClubMember::where('club_id', $data['club_id'])
             ->where('student_id', $data['student_id'])
+            ->when($current, fn ($query) => $query->whereKeyNot($current->id))
             ->exists();
-
-        if ($exists) {
-            return redirect()->back()->withErrors(['student_id' => 'Sinh viên này đã là thành viên của CLB.'])->withInput();
+        if ($duplicate) {
+            throw ValidationException::withMessages(['student_id' => 'Sinh viên đã là thành viên của CLB này.']);
         }
 
-        // Check leave_date >= join_date
-        if (!empty($data['leave_date']) && !empty($data['join_date'])) {
-            if (Carbon::parse($data['leave_date'])->lt(Carbon::parse($data['join_date']))) {
-                return redirect()->back()->withErrors(['leave_date' => 'Ngày rời không được nhỏ hơn ngày tham gia.'])->withInput();
-            }
+        $club = Club::findOrFail($data['club_id']);
+        $activeCount = $club->members()->where('status', 'active')
+            ->when($current, fn ($query) => $query->whereKeyNot($current->id))
+            ->count();
+        if ($data['status'] === 'active' && $activeCount >= $club->max_members) {
+            throw ValidationException::withMessages(['club_id' => 'CLB đã đạt số lượng thành viên tối đa.']);
         }
 
-        ClubMember::create($data);
-
-        return redirect()->route('club_members.index')->with('success','Đã thêm thành viên.');
-    }
-
-    public function show(string $id)
-    {
-        $member = ClubMember::with(['club','student','clubRole'])->findOrFail($id);
-
-        return view('club_members.show', compact('member'));
-    }
-
-    public function edit(string $id)
-    {
-        $member = ClubMember::findOrFail($id);
-        $clubs = Club::all();
-        $students = Student::all();
-        $roles = ClubRole::all();
-
-        return view('club_members.edit', compact('member','clubs','students','roles'));
-    }
-
-    public function update(Request $request, string $id)
-    {
-        $member = ClubMember::findOrFail($id);
-
-        $data = $request->validate([
-            'club_id' => 'required|exists:clubs,id',
-            'student_id' => 'required|exists:students,id',
-            'club_role_id' => 'required|exists:club_roles,id',
-            'join_date' => 'required|date',
-            'leave_date' => 'nullable|date',
-            'status' => 'required|in:active,inactive,pending',
-            'academic_year' => 'nullable|string|max:50',
-            'note' => 'nullable|string'
-        ]);
-
-        // Prevent duplicate membership for same student and club (exclude current)
-        $exists = ClubMember::where('club_id', $data['club_id'])
-            ->where('student_id', $data['student_id'])
-            ->where('id', '!=', $id)
-            ->exists();
-
-        if ($exists) {
-            return redirect()->back()->withErrors(['student_id' => 'Sinh viên này đã là thành viên của CLB.'])->withInput();
-        }
-
-        // Check leave_date >= join_date
-        if (!empty($data['leave_date']) && !empty($data['join_date'])) {
-            if (Carbon::parse($data['leave_date'])->lt(Carbon::parse($data['join_date']))) {
-                return redirect()->back()->withErrors(['leave_date' => 'Ngày rời không được nhỏ hơn ngày tham gia.'])->withInput();
-            }
-        }
-
-        $member->update($data);
-
-        return redirect()->route('club_members.index')->with('success','Đã cập nhật thành viên.');
-    }
-
-    public function destroy(string $id)
-    {
-        $member = ClubMember::findOrFail($id);
-
-        $member->delete();
-
-        return redirect()->route('club_members.index');
+        return $data;
     }
 }

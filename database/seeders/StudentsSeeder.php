@@ -2,52 +2,31 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class StudentsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $users = User::where('role', 'student')->take(6)->get();
-
-        if ($users->isEmpty()) {
-            $this->command->info('StudentsSeeder: no student-role users found — run UsersSeeder first.');
-            return;
-        }
-
-        $samples = [
-            ['student_code' => 'S2026001', 'full_name' => 'Nguyễn Văn A', 'class' => 'CNTT1', 'faculty' => 'CNTT', 'phone' => '0900000001'],
-            ['student_code' => 'S2026002', 'full_name' => 'Trần Thị B', 'class' => 'CNTT2', 'faculty' => 'CNTT', 'phone' => '0900000002'],
-            ['student_code' => 'S2026003', 'full_name' => 'Lê Văn C', 'class' => 'BONGDA1', 'faculty' => 'Thể thao', 'phone' => '0900000003'],
-            ['student_code' => 'S2026004', 'full_name' => 'Phạm Thị D', 'class' => 'AMNHAC1', 'faculty' => 'Văn hóa', 'phone' => '0900000004'],
-            ['student_code' => 'S2026005', 'full_name' => 'Hoàng Văn E', 'class' => 'CNTT3', 'faculty' => 'CNTT', 'phone' => '0900000005'],
-            ['student_code' => 'S2026006', 'full_name' => 'Đỗ Thị F', 'class' => 'CNTT4', 'faculty' => 'CNTT', 'phone' => '0900000006'],
+        $students = [
+            ['email' => 'an@tlu.edu.vn', 'student_code' => '2051006123', 'full_name' => 'Nguyễn Văn An', 'class' => '65TH1', 'faculty' => 'Công nghệ thông tin', 'phone' => '0987654321'],
+            ['email' => 'binh@tlu.edu.vn', 'student_code' => '2151006456', 'full_name' => 'Trần Thị Bình', 'class' => '65TH2', 'faculty' => 'Công nghệ thông tin', 'phone' => '0987654322'],
+            ['email' => 'cuong@tlu.edu.vn', 'student_code' => '2251006789', 'full_name' => 'Lê Văn Cường', 'class' => '65QT1', 'faculty' => 'Kinh tế và Quản lý', 'phone' => '0987654323'],
+            ['email' => 'dung@tlu.edu.vn', 'student_code' => '2151006457', 'full_name' => 'Phạm Thị Dung', 'class' => '65TH2', 'faculty' => 'Công nghệ thông tin', 'phone' => '0987654324'],
+            ['email' => 'duc@tlu.edu.vn', 'student_code' => '2051006124', 'full_name' => 'Hoàng Minh Đức', 'class' => '65TH1', 'faculty' => 'Công nghệ thông tin', 'phone' => '0987654325'],
+            ['email' => 'ha@tlu.edu.vn', 'student_code' => '2151006458', 'full_name' => 'Đỗ Thu Hà', 'class' => '65TH2', 'faculty' => 'Công nghệ thông tin', 'phone' => '0987654326'],
         ];
 
-        $i = 0;
-        foreach ($users as $user) {
-            if (!isset($samples[$i])) break;
-            $s = $samples[$i];
+        foreach ($students as $student) {
+            $user = User::where('email', $student['email'])->firstOrFail();
+            unset($student['email']);
 
             Student::updateOrCreate(
-                ['student_code' => $s['student_code']],
-                [
-                    'user_id' => $user->id,
-                    'full_name' => $s['full_name'],
-                    'class' => $s['class'],
-                    'faculty' => $s['faculty'],
-                    'phone' => $s['phone']
-                ]
+                ['student_code' => $student['student_code']],
+                $student + ['user_id' => $user->id]
             );
-
-            $i++;
         }
-
-        $this->command->info('StudentsSeeder: seeded/updated '.$i.' students.');
     }
 }

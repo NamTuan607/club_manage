@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Certificate extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = ['student_point_id', 'certificate_code', 'issued_at', 'status'];
+
+    protected $casts = ['issued_at' => 'datetime'];
     public function studentPoint()
     {
         return $this->belongsTo(StudentPoint::class);

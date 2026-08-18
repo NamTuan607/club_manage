@@ -8,7 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Event extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = [
+        'club_id', 'category_id', 'title', 'description', 'location',
+        'start_time', 'end_time', 'capacity', 'status',
+    ];
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'capacity' => 'integer',
+    ];
     public function club()
     {
         return $this->belongsTo(Club::class);
@@ -32,5 +42,10 @@ class Event extends Model
     public function studentPoints()
     {
         return $this->hasMany(StudentPoint::class);
+    }
+
+    public function latestApproval()
+    {
+        return $this->hasOne(EventApproval::class)->latestOfMany('approved_at');
     }
 }

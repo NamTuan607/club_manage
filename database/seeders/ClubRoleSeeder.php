@@ -2,24 +2,28 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Club;
 use App\Models\ClubRole;
+use Illuminate\Database\Seeder;
 
 class ClubRoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $roles = [
-            ['role_name' => 'Chủ nhiệm', 'description' => 'Người đứng đầu câu lạc bộ'],
-            ['role_name' => 'Phó chủ nhiệm', 'description' => 'Phó lãnh đạo câu lạc bộ'],
-            ['role_name' => 'Thành viên', 'description' => 'Thành viên bình thường của câu lạc bộ'],
+            'Chủ nhiệm' => 'Phụ trách chung các hoạt động của CLB.',
+            'Phó chủ nhiệm' => 'Hỗ trợ điều hành và tổ chức hoạt động.',
+            'Trưởng ban Truyền thông' => 'Phụ trách truyền thông, nội dung và hình ảnh.',
+            'Thành viên' => 'Tham gia hoạt động của câu lạc bộ.',
         ];
 
-        foreach ($roles as $r) {
-            ClubRole::firstOrCreate(['role_name' => $r['role_name']], ['description' => $r['description']]);
-        }
+        Club::all()->each(function (Club $club) use ($roles) {
+            foreach ($roles as $roleName => $description) {
+                ClubRole::updateOrCreate(
+                    ['club_id' => $club->id, 'role_name' => $roleName],
+                    ['description' => $description]
+                );
+            }
+        });
     }
 }
