@@ -32,6 +32,8 @@ return new class extends Migration
         ])->default('valid');
 
         $table->timestamps();
+
+        $table->unique('student_point_id');
     });
 }
 

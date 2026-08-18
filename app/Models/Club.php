@@ -32,4 +32,28 @@ class Club extends Model
     {
         return $this->hasMany(Event::class);
     }
+
+    public function roles()
+    {
+        return $this->hasMany(ClubRole::class);
+    }
+
+    public function membershipRequests()
+    {
+        return $this->hasMany(MembershipRequest::class);
+    }
+
+    public function getMembersCountAttribute(): int
+    {
+        return $this->active_members_count ?? $this->members()->where('status', 'active')->count();
+    }
+
+    /**
+     * Capacity is displayed with the terminology from the assignment while
+     * retaining the existing max_members database column.
+     */
+    public function getCapacityAttribute(): int
+    {
+        return (int) $this->max_members;
+    }
 }

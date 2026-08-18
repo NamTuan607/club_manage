@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class StudentPoint extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = ['student_id', 'event_id', 'rule_id', 'points', 'awarded_at'];
+
+    protected $casts = ['awarded_at' => 'datetime', 'points' => 'integer'];
     public function student()
     {
         return $this->belongsTo(Student::class);

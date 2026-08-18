@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class EventApproval extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = ['event_id', 'approved_by', 'status', 'note', 'approved_at'];
+
+    protected $casts = ['approved_at' => 'datetime'];
     public function event()
     {
         return $this->belongsTo(Event::class);

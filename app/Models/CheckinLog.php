@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class CheckinLog extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = ['registration_id', 'checkin_time', 'status'];
+
+    protected $casts = ['checkin_time' => 'datetime'];
     public function registration()
     {
         return $this->belongsTo(EventRegistration::class,'registration_id');

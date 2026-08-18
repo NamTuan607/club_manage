@@ -1,27 +1,6 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Chi tiết vai trò</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container mt-4">
-    <h2 class="mb-4 text-center">CHI TIẾT VAI TRÒ</h2>
-
-    <div class="card bg-white p-4">
-        <div class="mb-3">
-            <a href="{{ route('club_roles.index') }}" class="btn btn-secondary">Quay lại</a>
-            <a href="{{ route('club_roles.edit', $role->id) }}" class="btn btn-primary">Chỉnh sửa</a>
-        </div>
-
-        <table class="table">
-            <tr><th>ID</th><td>{{ $role->id }}</td></tr>
-            <tr><th>Tên vai trò</th><td>{{ $role->role_name }}</td></tr>
-            <tr><th>Mô tả</th><td>{{ $role->description }}</td></tr>
-            <tr><th>Thời gian tạo</th><td>{{ $role->created_at }}</td></tr>
-        </table>
-    </div>
-</div>
-</body>
-</html>
+@extends('layouts.app')
+@section('title', $clubRole->role_name)
+@section('content')
+<div class="d-flex justify-content-between align-items-start mb-4"><div><h1 class="page-title">{{ $clubRole->role_name }}</h1><div class="page-subtitle">{{ $clubRole->club->name ?? '-' }}</div></div><a class="btn btn-primary" href="{{ route('club_roles.edit', $clubRole) }}"><i class="bi bi-pencil me-1"></i>Sửa</a></div>
+<div class="card"><div class="card-body"><dl class="row"><dt class="col-sm-3">Câu lạc bộ</dt><dd class="col-sm-9">{{ $clubRole->club->name ?? '-' }}</dd><dt class="col-sm-3">Mô tả</dt><dd class="col-sm-9">{{ $clubRole->description ?: '-' }}</dd></dl><hr><h2 class="h6">Thành viên sử dụng chức vụ này</h2><ul class="mb-0">@forelse($clubRole->members as $member)<li>{{ $member->student->full_name }} ({{ $member->status }})</li>@empty<li class="text-secondary">Chưa có thành viên.</li>@endforelse</ul></div></div>
+@endsection

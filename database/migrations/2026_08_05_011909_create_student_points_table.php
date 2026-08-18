@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('student_points', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('rule_id')->constrained('activity_point_rules')->cascadeOnDelete();
+            $table->integer('points');
+            $table->timestamp('awarded_at');
             $table->timestamps();
+
+            $table->unique(['student_id', 'event_id']);
         });
     }
 

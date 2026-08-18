@@ -15,8 +15,10 @@ return new class extends Migration
 
         $table->id();
 
-        $table->string('name');
+        $table->string('name')->unique();
         $table->text('description')->nullable();
+        $table->unsignedInteger('max_points')->default(100);
+        $table->enum('status', ['active', 'inactive'])->default('active');
 
         $table->timestamps();
     });

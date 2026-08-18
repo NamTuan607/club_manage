@@ -2,72 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Club;
 use App\Models\ClubRole;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ClubRoleController extends Controller
 {
     public function index()
     {
-        $roles = ClubRole::all();
+        $roles = ClubRole::with('club')->withCount('members')->orderBy('club_id')->orderBy('role_name')->paginate(12);
 
         return view('club_roles.index', compact('roles'));
     }
 
     public function create()
     {
-        return view('club_roles.create');
+        return view('club_roles.create', ['clubs' => $this->clubs()]);
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'role_name' => 'required|string|max:255|unique:club_roles,role_name',
-            'description' => 'nullable|string'
-        ]);
+        ClubRole::create($this->validated($request));
 
-        ClubRole::create($data);
-
-        return redirect()->route('club_roles.index')->with('success','Đã tạo vai trò.');
+        return redirect()->route('club_roles.index')->with('success', 'Đã tạo chức vụ CLB.');
     }
 
-    public function show(string $id)
+    public function show(ClubRole $clubRole)
     {
-        $role = ClubRole::findOrFail($id);
+        $clubRole->load(['club', 'members.student']);
 
-        return view('club_roles.show', compact('role'));
+        return view('club_roles.show', compact('clubRole'));
     }
 
-    public function edit(string $id)
+    public function edit(ClubRole $clubRole)
     {
-        $role = ClubRole::findOrFail($id);
-
-        return view('club_roles.edit', compact('role'));
+        return view('club_roles.edit', ['clubRole' => $clubRole, 'clubs' => $this->clubs()]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, ClubRole $clubRole)
     {
-        $role = ClubRole::findOrFail($id);
-        $data = $request->validate([
-            'role_name' => 'required|string|max:255|unique:club_roles,role_name,'.$id,
-            'description' => 'nullable|string'
-        ]);
+        $clubRole->update($this->validated($request, $clubRole));
 
-        $role->update($data);
-
-        return redirect()->route('club_roles.index')->with('success','Đã cập nhật vai trò.');
+        return redirect()->route('club_roles.index')->with('success', 'Đã cập nhật chức vụ CLB.');
     }
 
-    public function destroy(string $id)
+    public function destroy(ClubRole $clubRole)
     {
-        $role = ClubRole::findOrFail($id);
-
-        if ($role->members()->exists()) {
-            return redirect()->route('club_roles.index')->with('error', 'Không thể xóa vai trò đang được sử dụng bởi thành viên.');
+        if ($clubRole->members()->exists()) {
+            return back()->with('error', 'Không thể xóa chức vụ đang được thành viên sử dụng.');
         }
 
-        $role->delete();
+        $clubRole->delete();
 
-        return redirect()->route('club_roles.index')->with('success','Đã xóa vai trò.');
+        return redirect()->route('club_roles.index')->with('success', 'Đã xóa chức vụ CLB.');
+    }
+
+    private function clubs()
+    {
+        return Club::where('status', 'active')->orderBy('name')->get();
+    }
+
+    private function validated(Request $request, ?ClubRole $clubRole = null): array
+    {
+        return $request->validate([
+            'club_id' => ['required', 'exists:clubs,id'],
+            'role_name' => [
+                'required', 'string', 'max:255',
+                Rule::unique('club_roles', 'role_name')
+                    ->where('club_id', $request->input('club_id'))
+                    ->ignore($clubRole?->id),
+            ],
+            'description' => ['nullable', 'string', 'max:1000'],
+        ]);
     }
 }

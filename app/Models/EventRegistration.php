@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class EventRegistration extends Model
 {
     use HasFactory;
-    //
+
+    protected $fillable = ['event_id', 'student_id', 'registered_at', 'status'];
+
+    protected $casts = ['registered_at' => 'datetime'];
     public function student()
     {
         return $this->belongsTo(Student::class);
