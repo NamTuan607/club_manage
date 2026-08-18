@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventApproval;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class EventApprovalController extends Controller
 {
@@ -14,46 +14,41 @@ class EventApprovalController extends Controller
     {
         $approvals = EventApproval::with(['event.club', 'approver'])->latest('approved_at')->paginate(10);
         $pendingEvents = Event::with('club')->where('status', 'pending')->orderBy('start_time')->get();
-
         return view('event_approvals.index', compact('approvals', 'pendingEvents'));
     }
 
-    public function create(Request $request)
+    public function approve(Event $event)
     {
-        $events = Event::with('club')->where('status', 'pending')->orderBy('start_time')->get();
-        $approvers = User::where('role', 'admin')->orderBy('name')->get();
-        $selectedEventId = $request->integer('event_id');
-
-        return view('event_approvals.create', compact('events', 'approvers', 'selectedEventId'));
+        $this->process($event, 'approved');
+        return redirect()->route('event-approvals.index')->with('success', 'Đã duyệt sự kiện.');
     }
 
-    public function store(Request $request)
+    public function reject(Event $event)
     {
-        $data = $request->validate([
-            'event_id' => ['required', 'exists:events,id'],
-            'approved_by' => ['required', 'exists:users,id'],
-            'status' => ['required', 'in:approved,rejected'],
-            'note' => ['nullable', 'string', 'max:1000'],
-        ]);
-
-        DB::transaction(function () use ($data) {
-            $event = Event::lockForUpdate()->findOrFail($data['event_id']);
-
-            if ($event->status !== 'pending') {
-                abort(422, 'Sự kiện này không còn chờ duyệt.');
-            }
-
-            EventApproval::create($data + ['approved_at' => now()]);
-            $event->update(['status' => $data['status']]);
-        });
-
-        return redirect()->route('event-approvals.index')->with('success', 'Đã cập nhật kết quả duyệt sự kiện.');
+        $this->process($event, 'rejected');
+        return redirect()->route('event-approvals.index')->with('success', 'Đã từ chối sự kiện.');
     }
 
     public function show(EventApproval $eventApproval)
     {
         $eventApproval->load(['event.club', 'event.category', 'approver']);
-
         return view('event_approvals.show', compact('eventApproval'));
+    }
+
+    private function process(Event $event, string $status): void
+    {
+        DB::transaction(function () use ($event, $status) {
+            $event = Event::lockForUpdate()->findOrFail($event->id);
+            if ($event->status !== 'pending') {
+                throw ValidationException::withMessages(['event' => 'Sự kiện này không còn chờ duyệt.']);
+            }
+            EventApproval::create([
+                'event_id' => $event->id,
+                'approved_by' => User::where('role', 'admin')->value('id'),
+                'status' => $status,
+                'approved_at' => now(),
+            ]);
+            $event->update(['status' => $status]);
+        });
     }
 }

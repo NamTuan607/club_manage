@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\Certificate;
+use App\Models\CheckinLog;
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Models\MembershipRequest;
 use App\Models\Student;
 use App\Models\StudentPoint;
 
@@ -17,7 +20,12 @@ class DashboardController extends Controller
             'students' => Student::count(),
             'events' => Event::count(),
             'registrations' => EventRegistration::where('status', 'registered')->count(),
-            'points' => StudentPoint::count(),
+            'checkins' => CheckinLog::count(),
+            'points' => StudentPoint::sum('points'),
+            'certificates' => Certificate::count(),
+            'pending_memberships' => MembershipRequest::where('status', 'pending')->count(),
+            'pending_events' => Event::where('status', 'pending')->count(),
+            'pending_checkins' => CheckinLog::where('status', 'pending')->count(),
         ];
 
         $upcomingEvents = Event::with('club', 'category')

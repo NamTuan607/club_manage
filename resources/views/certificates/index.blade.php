@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Danh sách chứng nhận')
+@section('title', 'Chứng nhận')
 @section('content')
-<h1 class=page-title>Danh sách chứng nhận</h1>
+<div class="d-flex justify-content-between align-items-end mb-4"><div><h1 class="page-title">Danh sách chứng nhận</h1><div class="page-subtitle">Minh chứng tham gia hoạt động của sinh viên.</div></div><a class="btn btn-primary" href="{{ route('certificates.create') }}"><i class="bi bi-plus-lg me-1"></i>Cấp chứng nhận</a></div>
+<div class="card"><div class="card-body"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Mã chứng nhận</th><th>Sinh viên</th><th>Sự kiện</th><th>Ngày cấp</th><th>Trạng thái</th><th></th></tr></thead><tbody>@forelse($certificates as $certificate)<tr><td><strong>{{ $certificate->certificate_code }}</strong></td><td>{{ $certificate->studentPoint->student->full_name }}</td><td>{{ $certificate->studentPoint->event->title }}</td><td>{{ $certificate->issued_at->format('d/m/Y') }}</td><td><span class="badge text-bg-{{ $certificate->status === 'valid' ? 'success' : 'secondary' }}">{{ $certificate->status === 'valid' ? 'Có hiệu lực' : 'Đã thu hồi' }}</span></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ route('certificates.show', $certificate) }}"><i class="bi bi-eye"></i></a><a class="btn btn-sm btn-outline-secondary" href="{{ route('certificates.edit', $certificate) }}"><i class="bi bi-pencil"></i></a></td></tr>@empty<tr><td colspan="6" class="empty-state text-center">Chưa có chứng nhận.</td></tr>@endforelse</tbody></table></div><div class="mt-3">{{ $certificates->links() }}</div></div></div>
 @endsection

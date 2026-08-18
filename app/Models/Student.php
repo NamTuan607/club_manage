@@ -29,4 +29,9 @@ class Student extends Model
     {
         return $this->hasMany(StudentPoint::class);
     }
+
+    public function membershipRequests()
+    {
+        return $this->hasMany(MembershipRequest::class);
+    }
 }

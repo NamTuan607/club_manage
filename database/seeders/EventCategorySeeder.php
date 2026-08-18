@@ -10,14 +10,15 @@ class EventCategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Học thuật', 'description' => 'Các sự kiện học thuật, hội thảo và cuộc thi chuyên môn.', 'max_points' => 50, 'status' => 'active'],
-            ['name' => 'Thể thao', 'description' => 'Các hoạt động rèn luyện thể chất và thi đấu thể thao.', 'max_points' => 40, 'status' => 'active'],
-            ['name' => 'Văn hóa - Văn nghệ', 'description' => 'Các hoạt động văn hóa, nghệ thuật và biểu diễn.', 'max_points' => 30, 'status' => 'active'],
-            ['name' => 'Tình nguyện', 'description' => 'Các chương trình thiện nguyện, hỗ trợ cộng đồng.', 'max_points' => 50, 'status' => 'active'],
+            ['Học thuật', 50], ['Thể thao', 50], ['Văn hóa - Văn nghệ', 40],
+            ['Tình nguyện', 100], ['Kỹ năng', 50],
         ];
 
-        foreach ($categories as $category) {
-            EventCategory::updateOrCreate(['name' => $category['name']], $category);
+        foreach ($categories as [$name, $maxPoints]) {
+            EventCategory::updateOrCreate(
+                ['name' => $name],
+                ['description' => 'Dữ liệu loại sự kiện dùng để demo.', 'max_points' => $maxPoints, 'status' => 'active']
+            );
         }
     }
 }

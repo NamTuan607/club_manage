@@ -41,6 +41,12 @@ return new class extends Migration
                 $table->timestamp('awarded_at')->nullable();
             });
         }
+
+        if (Schema::hasTable('activity_point_rules') && !Schema::hasColumn('activity_point_rules', 'event_name')) {
+            Schema::table('activity_point_rules', function (Blueprint $table) {
+                $table->string('event_name')->nullable()->after('event_category_id');
+            });
+        }
     }
 
     public function down(): void

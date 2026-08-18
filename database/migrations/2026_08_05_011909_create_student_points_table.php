@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('awarded_at');
             $table->timestamps();
 
-            $table->unique(['student_id', 'event_id', 'rule_id']);
+            $table->unique(['student_id', 'event_id']);
         });
     }
 

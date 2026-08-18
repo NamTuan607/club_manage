@@ -66,6 +66,7 @@ class ActivityPointRuleController extends Controller
     {
         $data = $request->validate([
             'event_category_id' => ['required', 'exists:event_categories,id'],
+            'event_name' => ['nullable', 'string', 'max:255'],
             'points' => ['required', 'integer', 'min:1', 'max:1000'],
             'description' => ['nullable', 'string', 'max:1000'],
         ]);

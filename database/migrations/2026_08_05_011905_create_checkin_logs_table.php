@@ -22,9 +22,8 @@ return new class extends Migration
 
         $table->timestamp('checkin_time');
 
-        $table->enum('status',[
-            'checked_in'
-        ])->default('checked_in');
+        // Check-in is created first, then an administrator approves it to award points.
+        $table->enum('status', ['pending', 'approved'])->default('pending');
 
         $table->timestamps();
 

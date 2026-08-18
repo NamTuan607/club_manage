@@ -7,6 +7,7 @@ use App\Models\ClubMember;
 use App\Models\ClubRole;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class ClubMemberController extends Controller
@@ -25,7 +26,16 @@ class ClubMemberController extends Controller
 
     public function store(Request $request)
     {
-        ClubMember::create($this->validated($request));
+        $data = $this->validated($request);
+
+        DB::transaction(function () use ($data) {
+            $club = Club::lockForUpdate()->findOrFail($data['club_id']);
+            if ($data['status'] === 'active' && $club->members()->where('status', 'active')->count() >= $club->max_members) {
+                throw ValidationException::withMessages(['club_id' => 'CLB đã đạt số lượng thành viên tối đa.']);
+            }
+
+            ClubMember::create($data);
+        });
 
         return redirect()->route('club_members.index')->with('success', 'Đã thêm thành viên vào CLB.');
     }

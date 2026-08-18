@@ -11,7 +11,10 @@ class ClubController extends Controller
 {
     public function index()
     {
-        $clubs = Club::withCount(['members', 'events'])->latest()->paginate(10);
+        $clubs = Club::withCount([
+            'members as active_members_count' => fn ($query) => $query->where('status', 'active'),
+            'events',
+        ])->latest()->paginate(10);
 
         return view('clubs.index', compact('clubs'));
     }
@@ -30,7 +33,14 @@ class ClubController extends Controller
 
     public function show(Club $club)
     {
-        $club->load(['members.student', 'members.clubRole', 'roles', 'events.category']);
+        $club->load([
+            'members.student',
+            'members.clubRole',
+            'roles',
+            'events.category',
+            'membershipRequests.student',
+        ]);
+        $club->loadCount(['members as active_members_count' => fn ($query) => $query->where('status', 'active')]);
 
         return view('clubs.show', compact('club'));
     }

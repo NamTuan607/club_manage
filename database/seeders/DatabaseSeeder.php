@@ -14,10 +14,15 @@ class DatabaseSeeder extends Seeder
             ClubSeeder::class,
             ClubRoleSeeder::class,
             ClubMemberSeeder::class,
+            MembershipRequestSeeder::class,
             EventCategorySeeder::class,
-            ActivityPointRuleSeeder::class,
             EventSeeder::class,
-            EventActivitySeeder::class,
+            EventApprovalSeeder::class,
+            EventRegistrationSeeder::class,
+            CheckinLogSeeder::class,
+            ActivityPointRuleSeeder::class,
+            StudentPointSeeder::class,
+            CertificateSeeder::class,
         ]);
     }
 }

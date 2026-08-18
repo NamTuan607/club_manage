@@ -65,7 +65,6 @@ class StudentPointController extends Controller
 
             $exists = StudentPoint::where('student_id', $registration->student_id)
                 ->where('event_id', $registration->event_id)
-                ->where('rule_id', $rule->id)
                 ->exists();
 
             if ($exists) {

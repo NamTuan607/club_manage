@@ -11,17 +11,21 @@ class ActivityPointRuleSeeder extends Seeder
     public function run(): void
     {
         $rules = [
-            ['category' => 'Học thuật', 'points' => 10, 'description' => 'Tham gia đầy đủ sự kiện học thuật.'],
-            ['category' => 'Thể thao', 'points' => 8, 'description' => 'Tham gia đầy đủ hoạt động thể thao.'],
-            ['category' => 'Văn hóa - Văn nghệ', 'points' => 7, 'description' => 'Tham gia đầy đủ chương trình văn hóa - văn nghệ.'],
-            ['category' => 'Tình nguyện', 'points' => 12, 'description' => 'Hoàn thành hoạt động tình nguyện.'],
+            ['Tình nguyện', 'Hiến máu nhân đạo', 80, 'Hiến máu nhân đạo'],
+            ['Tình nguyện', null, 30, 'Hoạt động tình nguyện'],
+            ['Tình nguyện', 'Giúp đỡ cộng đồng', 50, 'Giúp đỡ cộng đồng'],
+            ['Thể thao', null, 30, 'Tham gia thi đấu'],
+            ['Thể thao', 'Cổ vũ đội tuyển', 20, 'Cổ vũ đội tuyển'],
+            ['Kỹ năng', null, 40, 'Workshop kỹ năng'],
+            ['Học thuật', null, 35, 'Hoạt động học thuật'],
+            ['Văn hóa - Văn nghệ', null, 25, 'Hoạt động văn hóa - văn nghệ'],
         ];
 
-        foreach ($rules as $rule) {
-            $category = EventCategory::where('name', $rule['category'])->firstOrFail();
+        foreach ($rules as [$categoryName, $eventName, $points, $description]) {
+            $category = EventCategory::where('name', $categoryName)->firstOrFail();
             ActivityPointRule::updateOrCreate(
-                ['event_category_id' => $category->id, 'description' => $rule['description']],
-                ['points' => $rule['points']]
+                ['event_category_id' => $category->id, 'event_name' => $eventName],
+                ['points' => $points, 'description' => $description]
             );
         }
     }

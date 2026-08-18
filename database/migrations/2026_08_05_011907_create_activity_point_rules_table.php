@@ -19,6 +19,10 @@ return new class extends Migration
               ->constrained('event_categories')
               ->cascadeOnDelete();
 
+        // Exact event title is optional. When present it takes priority over
+        // category rules while approving a check-in.
+        $table->string('event_name')->nullable();
+
         $table->integer('points');
 
         $table->text('description')->nullable();

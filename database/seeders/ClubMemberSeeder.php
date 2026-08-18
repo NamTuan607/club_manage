@@ -12,23 +12,23 @@ class ClubMemberSeeder extends Seeder
 {
     public function run(): void
     {
-        $members = [
-            ['code' => '2051006123', 'club' => 'CLB Kỹ năng mềm', 'role' => 'Chủ nhiệm'],
-            ['code' => '2151006456', 'club' => 'CLB Công nghệ thông tin', 'role' => 'Chủ nhiệm'],
-            ['code' => '2251006789', 'club' => 'CLB Bóng đá', 'role' => 'Chủ nhiệm'],
-            ['code' => '2151006457', 'club' => 'CLB Tình nguyện', 'role' => 'Chủ nhiệm'],
-            ['code' => '2051006124', 'club' => 'CLB Kỹ năng mềm', 'role' => 'Thành viên'],
-            ['code' => '2151006458', 'club' => 'CLB Công nghệ thông tin', 'role' => 'Trưởng ban Truyền thông'],
-        ];
+        $club = Club::where('name', 'CLB Tình nguyện')->firstOrFail();
+        $role = ClubRole::where('club_id', $club->id)->where('role_name', 'Thành viên')->firstOrFail();
 
-        foreach ($members as $member) {
-            $club = Club::where('name', $member['club'])->firstOrFail();
-            $student = Student::where('student_code', $member['code'])->firstOrFail();
-            $role = ClubRole::where('club_id', $club->id)->where('role_name', $member['role'])->firstOrFail();
-
+        // Cố ý tạo 99/100 thành viên cho màn hình duyệt yêu cầu tham gia.
+        Student::orderBy('id')->take(99)->get()->each(function (Student $student) use ($club, $role) {
             ClubMember::updateOrCreate(
                 ['club_id' => $club->id, 'student_id' => $student->id],
-                ['club_role_id' => $role->id, 'join_date' => '2024-09-01', 'status' => 'active', 'academic_year' => '2024-2025', 'note' => 'Dữ liệu minh họa để demo.']
+                ['club_role_id' => $role->id, 'join_date' => '2025-09-01', 'status' => 'active', 'academic_year' => '2025-2026', 'note' => 'Dữ liệu demo.']
+            );
+        });
+
+        foreach ([['CLB Bóng chuyền', 100], ['CLB Kỹ năng mềm', 2]] as [$clubName, $studentId]) {
+            $otherClub = Club::where('name', $clubName)->firstOrFail();
+            $otherRole = ClubRole::where('club_id', $otherClub->id)->where('role_name', 'Thành viên')->firstOrFail();
+            ClubMember::updateOrCreate(
+                ['club_id' => $otherClub->id, 'student_id' => $studentId],
+                ['club_role_id' => $otherRole->id, 'join_date' => '2025-09-01', 'status' => 'active', 'academic_year' => '2025-2026', 'note' => 'Dữ liệu demo.']
             );
         }
     }

@@ -9,12 +9,12 @@ class ActivityPointRule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['event_category_id', 'points', 'description'];
+    protected $fillable = ['event_category_id', 'event_name', 'points', 'description'];
 
     protected $casts = ['points' => 'integer'];
     public function category()
     {
-        return $this->belongsTo(EventCategory::class);
+        return $this->belongsTo(EventCategory::class, 'event_category_id');
     }
 
     public function studentPoints()

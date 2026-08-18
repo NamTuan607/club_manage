@@ -8,10 +8,15 @@
     <div class="page-subtitle">Tổng quan hoạt động của hệ thống</div>
 </div>
 <div class="row g-3 mb-4">
-    @foreach([['CLB','clubs','bi-people'], ['Sinh viên','students','bi-person-vcard'], ['Sự kiện','events','bi-calendar-event'], ['Đăng ký','registrations','bi-clipboard-check'], ['Bản ghi điểm','points','bi-award']] as [$label, $key, $icon])
-        <div class="col-sm-6 col-xl">
+    @foreach([['CLB','clubs','bi-people'], ['Sinh viên','students','bi-person-vcard'], ['Sự kiện','events','bi-calendar-event'], ['Đăng ký','registrations','bi-clipboard-check'], ['Check-in','checkins','bi-box-arrow-in-right'], ['Tổng điểm','points','bi-award'], ['Chứng nhận','certificates','bi-patch-check']] as [$label, $key, $icon])
+        <div class="col-sm-6 col-xl-3">
             <div class="card stat-card h-100"><div class="card-body d-flex justify-content-between align-items-center"><div><div class="text-secondary small">{{ $label }}</div><div class="stat-value">{{ $statistics[$key] }}</div></div><i class="bi {{ $icon }} fs-2 text-primary opacity-75"></i></div></div>
         </div>
+    @endforeach
+</div>
+<div class="row g-3 mb-4">
+    @foreach([['Yêu cầu CLB chờ duyệt', 'pending_memberships', 'membership-requests.index'], ['Sự kiện chờ duyệt', 'pending_events', 'event-approvals.index'], ['Check-in chờ duyệt', 'pending_checkins', 'checkins.index']] as [$label, $key, $route])
+        <div class="col-md-4"><a class="card text-decoration-none" href="{{ route($route) }}"><div class="card-body d-flex justify-content-between align-items-center"><div><div class="text-secondary small">{{ $label }}</div><div class="stat-value text-warning">{{ $statistics[$key] }}</div></div><i class="bi bi-hourglass-split fs-2 text-warning opacity-75"></i></div></a></div>
     @endforeach
 </div>
 <div class="row g-4">
