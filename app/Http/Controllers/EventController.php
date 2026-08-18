@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý CRUD sự kiện do các câu lạc bộ tổ chức.
 
 namespace App\Http\Controllers;
 

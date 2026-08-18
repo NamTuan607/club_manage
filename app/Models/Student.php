@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho hồ sơ sinh viên, thành viên CLB, đăng ký và điểm hoạt động.
 
 namespace App\Models;
 

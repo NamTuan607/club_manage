@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho câu lạc bộ, sức chứa, thành viên, vai trò và sự kiện.
 
 namespace App\Models;
 

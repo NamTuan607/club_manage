@@ -1,6 +1,55 @@
 @extends('layouts.app')
 @section('title', 'Cấp chứng nhận')
+
 @section('content')
-<div class="mb-4"><h1 class="page-title">Cấp chứng nhận</h1><div class="page-subtitle">Mỗi bản ghi điểm chỉ được cấp một chứng nhận.</div></div>
-<div class="card"><div class="card-body"><form method="POST" action="{{ route('certificates.store') }}">@csrf @include('partials.form-errors')<div class="row g-3"><div class="col-md-6"><label class="form-label required">Bản ghi điểm</label><select class="form-select" name="student_point_id" required><option value="">-- Chọn bản ghi điểm --</option>@foreach($studentPoints as $point)<option value="{{ $point->id }}" @selected(old('student_point_id', $selectedStudentPointId) == $point->id)>{{ $point->student->student_code }} - {{ $point->student->full_name }} · {{ $point->event->title }} ({{ $point->points }} điểm)</option>@endforeach</select></div><div class="col-md-6"><label class="form-label">Mã chứng nhận</label><input class="form-control" name="certificate_code" value="{{ old('certificate_code') }}" placeholder="Để trống để tự sinh mã"></div><div class="col-md-6"><label class="form-label required">Ngày cấp</label><input class="form-control" type="date" name="issued_at" value="{{ old('issued_at', now()->format('Y-m-d')) }}" required></div><div class="col-md-6"><label class="form-label required">Trạng thái</label><select class="form-select" name="status"><option value="valid">Có hiệu lực</option><option value="revoked">Thu hồi</option></select></div></div><div class="mt-4 d-flex justify-content-end gap-2"><a class="btn btn-light border" href="{{ route('certificates.index') }}">Hủy</a><button class="btn btn-primary">Cấp chứng nhận</button></div></form></div></div>
+<div class="mb-4">
+    <h1 class="page-title">Cấp chứng nhận</h1>
+    <div class="page-subtitle">Mỗi bản ghi điểm chỉ được cấp một chứng nhận.</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST" action="{{ route('certificates.store') }}">
+            @csrf 
+            @include('partials.form-errors')
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label required">Bản ghi điểm</label>
+                    <select class="form-select" name="student_point_id" required>
+                        <option value="">-- Chọn bản ghi điểm --</option>
+                        @foreach($studentPoints as $point)
+                            <option value="{{ $point->id }}" @selected(old('student_point_id', $selectedStudentPointId) == $point->id)>
+                                {{ $point->student->student_code }} - {{ $point->student->full_name }} · {{ $point->event->title }} ({{ $point->points }} điểm)
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Mã chứng nhận</label>
+                    <input class="form-control" name="certificate_code" value="{{ old('certificate_code') }}" placeholder="Để trống để tự sinh mã">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label required">Ngày cấp</label>
+                    <input class="form-control" type="date" name="issued_at" value="{{ old('issued_at', now()->format('Y-m-d')) }}" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label required">Trạng thái</label>
+                    <select class="form-select" name="status">
+                        <option value="valid">Có hiệu lực</option>
+                        <option value="revoked">Thu hồi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-end gap-2">
+                <a class="btn btn-light border" href="{{ route('certificates.index') }}">Hủy</a>
+                <button class="btn btn-primary">Cấp chứng nhận</button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection

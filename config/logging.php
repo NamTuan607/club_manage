@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Cấu hình logging của ứng dụng Laravel Club Management.
 
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;

@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Cấu hình session của ứng dụng Laravel Club Management.
 
 use Illuminate\Support\Str;
 

@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Lấy số liệu thật từ cơ sở dữ liệu để hiển thị Dashboard quản trị.
 
 namespace App\Http\Controllers;
 

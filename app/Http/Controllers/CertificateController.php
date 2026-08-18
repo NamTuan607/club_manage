@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý danh sách, cấp, sửa và thu hồi chứng nhận từ điểm hoạt động.
 
 namespace App\Http\Controllers;
 

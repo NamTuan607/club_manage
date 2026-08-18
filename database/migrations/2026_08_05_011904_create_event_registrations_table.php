@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng đăng ký sự kiện của sinh viên.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

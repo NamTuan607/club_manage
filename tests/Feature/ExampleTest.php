@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Bài kiểm thử feature mẫu của Laravel.
 
 namespace Tests\Feature;
 

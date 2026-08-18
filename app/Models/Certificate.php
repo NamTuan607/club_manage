@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho chứng nhận được cấp từ bản ghi điểm hoạt động.
 
 namespace App\Models;
 

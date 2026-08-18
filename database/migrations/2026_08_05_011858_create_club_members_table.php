@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng thành viên câu lạc bộ.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

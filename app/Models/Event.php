@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho sự kiện, phê duyệt, đăng ký và điểm hoạt động liên quan.
 
 namespace App\Models;
 

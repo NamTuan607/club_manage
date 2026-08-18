@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model tài khoản người dùng, gồm quản trị viên và tài khoản sinh viên.
 
 namespace App\Models;
 
@@ -58,4 +59,3 @@ class User extends Authenticatable
         return $this->hasMany(EventApproval::class, 'approved_by');
     }
 }
-

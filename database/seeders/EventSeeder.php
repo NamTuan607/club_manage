@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data cho các sự kiện với trạng thái, thời gian và sức chứa phục vụ demo.
 
 namespace Database\Seeders;
 

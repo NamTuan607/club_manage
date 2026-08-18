@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý CRUD hồ sơ sinh viên và tài khoản sinh viên liên quan.
 
 namespace App\Http\Controllers;
 

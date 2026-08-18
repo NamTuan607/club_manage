@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Bài kiểm thử unit mẫu của Laravel.
 
 namespace Tests\Unit;
 

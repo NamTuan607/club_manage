@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho lịch sử check-in của đăng ký sự kiện.
 
 namespace App\Models;
 

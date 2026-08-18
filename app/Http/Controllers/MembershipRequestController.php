@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Duyệt hoặc từ chối yêu cầu tham gia CLB, đồng thời kiểm tra sức chứa ở backend.
 
 namespace App\Http\Controllers;
 

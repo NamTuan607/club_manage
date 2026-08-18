@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tương thích, bổ sung cột còn thiếu cho cơ sở dữ liệu phiên bản cũ.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

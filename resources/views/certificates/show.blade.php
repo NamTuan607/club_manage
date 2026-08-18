@@ -1,6 +1,45 @@
 @extends('layouts.app')
 @section('title', 'Chi tiết chứng nhận')
+
 @section('content')
-<div class="d-flex justify-content-between align-items-start mb-4"><div><h1 class="page-title">{{ $certificate->certificate_code }}</h1><div class="page-subtitle">Chứng nhận hoạt động sinh viên</div></div><div class="d-flex gap-2"><a class="btn btn-primary" href="{{ route('certificates.edit', $certificate) }}"><i class="bi bi-pencil me-1"></i>Sửa</a><form method="POST" action="{{ route('certificates.destroy', $certificate) }}" onsubmit="return confirm('Xóa chứng nhận này?')">@csrf @method('DELETE')<button class="btn btn-outline-danger">Xóa</button></form></div></div>
-<div class="card"><div class="card-body"><dl class="row mb-0"><dt class="col-sm-3">Sinh viên</dt><dd class="col-sm-9">{{ $certificate->studentPoint->student->full_name }} ({{ $certificate->studentPoint->student->student_code }})</dd><dt class="col-sm-3">Sự kiện</dt><dd class="col-sm-9">{{ $certificate->studentPoint->event->title }}</dd><dt class="col-sm-3">CLB tổ chức</dt><dd class="col-sm-9">{{ $certificate->studentPoint->event->club->name }}</dd><dt class="col-sm-3">Quy tắc điểm</dt><dd class="col-sm-9">{{ $certificate->studentPoint->rule->event_name ?: $certificate->studentPoint->rule->category->name }} · {{ $certificate->studentPoint->points }} điểm</dd><dt class="col-sm-3">Ngày cấp</dt><dd class="col-sm-9">{{ $certificate->issued_at->format('d/m/Y') }}</dd><dt class="col-sm-3">Trạng thái</dt><dd class="col-sm-9">{{ $certificate->status === 'valid' ? 'Có hiệu lực' : 'Đã thu hồi' }}</dd></dl></div></div>
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="page-title">{{ $certificate->certificate_code }}</h1>
+        <div class="page-subtitle">Chứng nhận hoạt động sinh viên</div>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="{{ route('certificates.edit', $certificate) }}">
+            <i class="bi bi-pencil me-1"></i>Sửa
+        </a>
+        <form method="POST" action="{{ route('certificates.destroy', $certificate) }}" onsubmit="return confirm('Xóa chứng nhận này?')">
+            @csrf 
+            @method('DELETE')
+            <button class="btn btn-outline-danger">Xóa</button>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Sinh viên</dt>
+            <dd class="col-sm-9">{{ $certificate->studentPoint->student->full_name }} ({{ $certificate->studentPoint->student->student_code }})</dd>
+            
+            <dt class="col-sm-3">Sự kiện</dt>
+            <dd class="col-sm-9">{{ $certificate->studentPoint->event->title }}</dd>
+            
+            <dt class="col-sm-3">CLB tổ chức</dt>
+            <dd class="col-sm-9">{{ $certificate->studentPoint->event->club->name }}</dd>
+            
+            <dt class="col-sm-3">Quy tắc điểm</dt>
+            <dd class="col-sm-9">{{ $certificate->studentPoint->rule->event_name ?: $certificate->studentPoint->rule->category->name }} · {{ $certificate->studentPoint->points }} điểm</dd>
+            
+            <dt class="col-sm-3">Ngày cấp</dt>
+            <dd class="col-sm-9">{{ $certificate->issued_at->format('d/m/Y') }}</dd>
+            
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">{{ $certificate->status === 'valid' ? 'Có hiệu lực' : 'Đã thu hồi' }}</dd>
+        </dl>
+    </div>
+</div>
 @endsection

@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Hiển thị và quản lý các bản ghi điểm hoạt động của sinh viên.
 
 namespace App\Http\Controllers;
 

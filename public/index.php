@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Điểm vào HTTP công khai, chuyển mọi request đến ứng dụng Laravel.
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;

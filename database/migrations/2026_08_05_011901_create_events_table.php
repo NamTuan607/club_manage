@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng sự kiện do câu lạc bộ tổ chức.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

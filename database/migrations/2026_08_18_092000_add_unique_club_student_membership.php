@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration chống một sinh viên xuất hiện trùng trong cùng một câu lạc bộ.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Nơi khai báo các lệnh console tùy chỉnh của Laravel.
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;

@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý thành viên CLB và kiểm tra không vượt sức chứa của câu lạc bộ.
 
 namespace App\Http\Controllers;
 

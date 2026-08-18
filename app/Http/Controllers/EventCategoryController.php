@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý CRUD các loại sự kiện và mức điểm tối đa.
 
 namespace App\Http\Controllers;
 

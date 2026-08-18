@@ -1,6 +1,58 @@
 @extends('layouts.app')
 @section('title', $eventCategory->name)
+
 @section('content')
-<div class="d-flex justify-content-between align-items-start mb-4"><div><h1 class="page-title">{{ $eventCategory->name }}</h1><div class="page-subtitle">Điểm tối đa: {{ $eventCategory->max_points }}</div></div><a class="btn btn-primary" href="{{ route('event-categories.edit', $eventCategory) }}"><i class="bi bi-pencil me-1"></i>Sửa</a></div>
-<div class="row g-4"><div class="col-lg-5"><div class="card"><div class="card-body"><h2 class="h6">Mô tả</h2><p>{{ $eventCategory->description ?: 'Chưa có mô tả.' }}</p><span class="badge text-bg-{{ $eventCategory->status === 'active' ? 'success' : 'secondary' }}">{{ $eventCategory->status }}</span></div></div></div><div class="col-lg-7"><div class="card mb-4"><div class="card-body"><h2 class="h6">Quy tắc điểm</h2><ul class="mb-0">@forelse($eventCategory->rules as $rule)<li>{{ $rule->points }} điểm - {{ $rule->description }}</li>@empty<li class="text-secondary">Chưa có quy tắc.</li>@endforelse</ul></div></div><div class="card"><div class="card-body"><h2 class="h6">Sự kiện</h2><ul class="mb-0">@forelse($eventCategory->events as $event)<li><a href="{{ route('events.show', $event) }}">{{ $event->title }}</a> · {{ $event->status }}</li>@empty<li class="text-secondary">Chưa có sự kiện.</li>@endforelse</ul></div></div></div></div>
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="page-title">{{ $eventCategory->name }}</h1>
+        <div class="page-subtitle">Điểm tối đa: {{ $eventCategory->max_points }}</div>
+    </div>
+    <a class="btn btn-primary" href="{{ route('event-categories.edit', $eventCategory) }}">
+        <i class="bi bi-pencil me-1"></i>Sửa
+    </a>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="h6">Mô tả</h2>
+                <p>{{ $eventCategory->description ?: 'Chưa có mô tả.' }}</p>
+                <span class="badge text-bg-{{ $eventCategory->status === 'active' ? 'success' : 'secondary' }}">
+                    {{ $eventCategory->status }}
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-7">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="h6">Quy tắc điểm</h2>
+                <ul class="mb-0">
+                    @forelse($eventCategory->rules as $rule)
+                        <li>{{ $rule->points }} điểm - {{ $rule->description }}</li>
+                    @empty
+                        <li class="text-secondary">Chưa có quy tắc.</li>
+                    @endforelse
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h2 class="h6">Sự kiện</h2>
+                <ul class="mb-0">
+                    @forelse($eventCategory->events as $event)
+                        <li>
+                            <a href="{{ route('events.show', $event) }}">{{ $event->title }}</a> · {{ $event->status }}
+                        </li>
+                    @empty
+                        <li class="text-secondary">Chưa có sự kiện.</li>
+                    @endforelse
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

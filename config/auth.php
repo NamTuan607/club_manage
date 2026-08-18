@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Cấu hình auth của ứng dụng Laravel Club Management.
 
 use App\Models\User;
 

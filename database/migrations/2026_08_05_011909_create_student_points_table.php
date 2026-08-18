@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng điểm hoạt động của sinh viên và chống cộng trùng theo sự kiện.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

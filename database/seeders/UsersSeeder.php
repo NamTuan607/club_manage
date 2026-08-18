@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data tài khoản quản trị viên và tài khoản sinh viên.
 
 namespace Database\Seeders;
 

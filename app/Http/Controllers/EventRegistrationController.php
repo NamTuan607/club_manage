@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý đăng ký sự kiện và chặn đăng ký trùng hoặc vượt sức chứa.
 
 namespace App\Http\Controllers;
 

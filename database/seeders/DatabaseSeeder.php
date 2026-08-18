@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Điều phối thứ tự chạy toàn bộ seeder mock data của website.
 
 namespace Database\Seeders;
 

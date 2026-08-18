@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Xử lý duyệt hoặc từ chối sự kiện đang chờ phê duyệt.
 
 namespace App\Http\Controllers;
 

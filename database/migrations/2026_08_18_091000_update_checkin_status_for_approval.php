@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration cập nhật trạng thái check-in để hỗ trợ quy trình cán bộ duyệt.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

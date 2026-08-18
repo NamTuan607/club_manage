@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data thành viên CLB, gồm 99/100 thành viên để demo giới hạn sức chứa.
 
 namespace Database\Seeders;
 

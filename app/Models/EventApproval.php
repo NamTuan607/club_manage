@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho kết quả cán bộ phê duyệt sự kiện.
 
 namespace App\Models;
 

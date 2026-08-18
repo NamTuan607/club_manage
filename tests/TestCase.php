@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Lớp cơ sở khởi tạo ứng dụng cho các bài kiểm thử.
 
 namespace Tests;
 

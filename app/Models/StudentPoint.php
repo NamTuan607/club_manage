@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho điểm hoạt động được cộng từ check-in đã duyệt.
 
 namespace App\Models;
 

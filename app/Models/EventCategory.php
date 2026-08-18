@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho loại sự kiện và các quy tắc điểm tương ứng.
 
 namespace App\Models;
 

@@ -1,6 +1,73 @@
 @extends('layouts.app')
 @section('title', 'Thành viên CLB')
+
 @section('content')
-<div class="d-flex justify-content-between align-items-end mb-4"><div><h1 class="page-title">Danh sách thành viên CLB</h1><div class="page-subtitle">Quản lý sinh viên và vai trò trong câu lạc bộ</div></div><a class="btn btn-primary" href="{{ route('club_members.create') }}"><i class="bi bi-person-plus me-1"></i>Thêm thành viên</a></div>
-<div class="card"><div class="card-body"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Sinh viên</th><th>CLB</th><th>Chức vụ</th><th>Ngày tham gia</th><th>Trạng thái</th><th class="text-end">Thao tác</th></tr></thead><tbody>@forelse($members as $clubMember)<tr><td><strong>{{ $clubMember->student->full_name }}</strong><div class="small text-secondary">{{ $clubMember->student->student_code }} · {{ $clubMember->student->class }}</div></td><td>{{ $clubMember->club->name }}</td><td>{{ $clubMember->clubRole->role_name }}</td><td>{{ $clubMember->join_date->format('d/m/Y') }}</td><td><span class="badge text-bg-{{ $clubMember->status === 'active' ? 'success' : ($clubMember->status === 'pending' ? 'warning' : 'secondary') }}">{{ $clubMember->status === 'active' ? 'Hoạt động' : ($clubMember->status === 'pending' ? 'Chờ duyệt' : 'Ngừng') }}</span></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ route('club_members.show', $clubMember) }}"><i class="bi bi-eye"></i></a><a class="btn btn-sm btn-outline-secondary" href="{{ route('club_members.edit', $clubMember) }}"><i class="bi bi-pencil"></i></a><form class="d-inline" action="{{ route('club_members.destroy', $clubMember) }}" method="POST" onsubmit="return confirm('Xóa thành viên khỏi CLB?')">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr>@empty<tr><td colspan="6" class="empty-state text-center">Chưa có thành viên.</td></tr>@endforelse</tbody></table></div><div class="mt-3">{{ $members->links() }}</div></div></div>
+<div class="d-flex justify-content-between align-items-end mb-4">
+    <div>
+        <h1 class="page-title">Danh sách thành viên CLB</h1>
+        <div class="page-subtitle">Quản lý sinh viên và vai trò trong câu lạc bộ</div>
+    </div>
+    <a class="btn btn-primary" href="{{ route('club_members.create') }}">
+        <i class="bi bi-person-plus me-1"></i>Thêm thành viên
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Sinh viên</th>
+                        <th>CLB</th>
+                        <th>Chức vụ</th>
+                        <th>Ngày tham gia</th>
+                        <th>Trạng thái</th>
+                        <th class="text-end">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($members as $clubMember)
+                        <tr>
+                            <td>
+                                <strong>{{ $clubMember->student->full_name }}</strong>
+                                <div class="small text-secondary">{{ $clubMember->student->student_code }} · {{ $clubMember->student->class }}</div>
+                            </td>
+                            <td>{{ $clubMember->club->name }}</td>
+                            <td>{{ $clubMember->clubRole->role_name }}</td>
+                            <td>{{ $clubMember->join_date->format('d/m/Y') }}</td>
+                            <td>
+                                <span class="badge text-bg-{{ $clubMember->status === 'active' ? 'success' : ($clubMember->status === 'pending' ? 'warning' : 'secondary') }}">
+                                    {{ $clubMember->status === 'active' ? 'Hoạt động' : ($clubMember->status === 'pending' ? 'Chờ duyệt' : 'Ngừng') }}
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-primary" href="{{ route('club_members.show', $clubMember) }}">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a class="btn btn-sm btn-outline-secondary" href="{{ route('club_members.edit', $clubMember) }}">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form class="d-inline" action="{{ route('club_members.destroy', $clubMember) }}" method="POST" onsubmit="return confirm('Xóa thành viên khỏi CLB?')">
+                                    @csrf 
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="empty-state text-center">Chưa có thành viên.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-3">
+            {{ $members->links() }}
+        </div>
+    </div>
+</div>
 @endsection

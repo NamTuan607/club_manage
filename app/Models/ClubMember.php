@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho quan hệ thành viên giữa sinh viên và câu lạc bộ.
 
 namespace App\Models;
 

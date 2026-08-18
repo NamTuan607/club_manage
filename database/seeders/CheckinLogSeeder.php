@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data cho các lần check-in ở trạng thái chờ duyệt và đã duyệt.
 
 namespace Database\Seeders;
 

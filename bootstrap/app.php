@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Khởi tạo ứng dụng Laravel, middleware và xử lý ngoại lệ.
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

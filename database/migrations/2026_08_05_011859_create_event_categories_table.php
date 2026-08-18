@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng loại sự kiện và điểm tối đa.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

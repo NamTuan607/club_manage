@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Khai báo các route web cho toàn bộ giao diện quản trị câu lạc bộ.
 
 use App\Http\Controllers\ActivityPointRuleController;
 use App\Http\Controllers\CertificateController;

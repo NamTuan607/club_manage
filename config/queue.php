@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Cấu hình queue của ứng dụng Laravel Club Management.
 
 return [
 

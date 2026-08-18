@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Factory tạo dữ liệu User giả phục vụ kiểm thử tự động.
 
 namespace Database\Factories;
 

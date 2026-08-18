@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý check-in và duyệt check-in để tự động cộng điểm cho sinh viên.
 
 namespace App\Http\Controllers;
 

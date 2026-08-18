@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data cho yêu cầu tham gia CLB ở các trạng thái chờ duyệt, duyệt và từ chối.
 
 namespace Database\Seeders;
 

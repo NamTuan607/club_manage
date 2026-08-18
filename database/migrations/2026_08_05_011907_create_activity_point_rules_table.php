@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng quy tắc tự động cộng điểm hoạt động.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

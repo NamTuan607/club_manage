@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Model Eloquent cho yêu cầu sinh viên xin tham gia câu lạc bộ.
 
 namespace App\Models;
 

@@ -1,6 +1,51 @@
 @extends('layouts.app')
 @section('title', 'Chi tiết quy tắc điểm')
 @section('content')
-<div class="d-flex justify-content-between align-items-start mb-4"><div><h1 class="page-title">Chi tiết quy tắc điểm</h1><div class="page-subtitle">{{ $activityPointRule->category->name }} · {{ $activityPointRule->event_name ?: 'Áp dụng theo loại sự kiện' }}</div></div><a class="btn btn-primary" href="{{ route('activity-point-rules.edit', $activityPointRule) }}"><i class="bi bi-pencil me-1"></i>Sửa</a></div>
-<div class="row g-4"><div class="col-lg-4"><div class="card"><div class="card-body"><div class="text-secondary">Điểm cộng</div><div class="stat-value">{{ $activityPointRule->points }}</div><hr><p class="mb-0">{{ $activityPointRule->description ?: 'Chưa có mô tả.' }}</p></div></div></div><div class="col-lg-8"><div class="card"><div class="card-body"><h2 class="h6">Lịch sử áp dụng</h2><div class="table-responsive"><table class="table table-sm mb-0"><thead><tr><th>Sinh viên</th><th>Sự kiện</th><th>Điểm</th><th>Ngày cộng</th></tr></thead><tbody>@forelse($activityPointRule->studentPoints as $point)<tr><td>{{ $point->student->full_name }}</td><td>{{ $point->event->title }}</td><td>{{ $point->points }}</td><td>{{ $point->awarded_at->format('d/m/Y H:i') }}</td></tr>@empty<tr><td colspan="4" class="text-secondary">Chưa áp dụng.</td></tr>@endforelse</tbody></table></div></div></div></div></div>
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="page-title">Chi tiết quy tắc điểm</h1>
+        <div class="page-subtitle">{{ $activityPointRule->category->name }} · {{ $activityPointRule->event_name ?: 'Áp dụng theo loại sự kiện' }}</div>
+    </div>
+    <a class="btn btn-primary" href="{{ route('activity-point-rules.edit', $activityPointRule) }}"><i class="bi bi-pencil me-1"></i>Sửa</a>
+</div>
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card"><div class="card-body">
+            <div class="text-secondary">Điểm cộng</div>
+            <div class="stat-value">{{ $activityPointRule->points }}</div>
+            <hr>
+            <p class="mb-0">{{ $activityPointRule->description ?: 'Chưa có mô tả.' }}</p>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card">
+        <div class="card-body">
+            <h2 class="h6">Lịch sử áp dụng</h2>
+            <div class="table-responsive"><table class="table table-sm mb-0">
+                <thead>
+                    <tr>
+                        <th>Sinh viên</th>
+                        <th>Sự kiện</th>
+                        <th>Điểm</th><th>Ngày cộng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($activityPointRule->studentPoints as $point)
+                    <tr>
+                        <td>{{ $point->student->full_name }}</td>
+                        <td>{{ $point->event->title }}</td>
+                        <td>{{ $point->points }}</td>
+                        <td>{{ $point->awarded_at->format('d/m/Y H:i') }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="text-secondary">Chưa áp dụng.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection

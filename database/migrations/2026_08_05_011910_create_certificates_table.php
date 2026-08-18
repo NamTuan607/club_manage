@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng chứng nhận được cấp từ điểm hoạt động.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo các bảng hàng đợi và job thất bại của Laravel.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

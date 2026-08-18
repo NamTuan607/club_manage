@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng tài khoản, mật khẩu và phiên đăng nhập của ứng dụng.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

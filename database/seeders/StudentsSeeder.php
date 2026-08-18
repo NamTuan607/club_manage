@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data hồ sơ sinh viên, gồm đủ sinh viên để demo CLB 99/100.
 
 namespace Database\Seeders;
 

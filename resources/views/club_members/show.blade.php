@@ -1,6 +1,41 @@
 @extends('layouts.app')
 @section('title', 'Chi tiết thành viên')
+
 @section('content')
-<div class="d-flex justify-content-between align-items-start mb-4"><div><h1 class="page-title">Chi tiết thành viên CLB</h1><div class="page-subtitle">{{ $clubMember->student->full_name }}</div></div><a class="btn btn-primary" href="{{ route('club_members.edit', $clubMember) }}"><i class="bi bi-pencil me-1"></i>Sửa</a></div>
-<div class="card"><div class="card-body"><dl class="row mb-0"><dt class="col-sm-3">Sinh viên</dt><dd class="col-sm-9">{{ $clubMember->student->full_name }} - {{ $clubMember->student->student_code }}</dd><dt class="col-sm-3">Câu lạc bộ</dt><dd class="col-sm-9">{{ $clubMember->club->name }}</dd><dt class="col-sm-3">Chức vụ</dt><dd class="col-sm-9">{{ $clubMember->clubRole->role_name }}</dd><dt class="col-sm-3">Ngày tham gia</dt><dd class="col-sm-9">{{ $clubMember->join_date->format('d/m/Y') }}</dd><dt class="col-sm-3">Trạng thái</dt><dd class="col-sm-9">{{ $clubMember->status }}</dd><dt class="col-sm-3">Năm học</dt><dd class="col-sm-9">{{ $clubMember->academic_year ?: '-' }}</dd><dt class="col-sm-3">Ghi chú</dt><dd class="col-sm-9">{{ $clubMember->note ?: '-' }}</dd></dl></div></div>
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="page-title">Chi tiết thành viên CLB</h1>
+        <div class="page-subtitle">{{ $clubMember->student->full_name }}</div>
+    </div>
+    <a class="btn btn-primary" href="{{ route('club_members.edit', $clubMember) }}">
+        <i class="bi bi-pencil me-1"></i>Sửa
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Sinh viên</dt>
+            <dd class="col-sm-9">{{ $clubMember->student->full_name }} - {{ $clubMember->student->student_code }}</dd>
+            
+            <dt class="col-sm-3">Câu lạc bộ</dt>
+            <dd class="col-sm-9">{{ $clubMember->club->name }}</dd>
+            
+            <dt class="col-sm-3">Chức vụ</dt>
+            <dd class="col-sm-9">{{ $clubMember->clubRole->role_name }}</dd>
+            
+            <dt class="col-sm-3">Ngày tham gia</dt>
+            <dd class="col-sm-9">{{ $clubMember->join_date->format('d/m/Y') }}</dd>
+            
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">{{ $clubMember->status }}</dd>
+            
+            <dt class="col-sm-3">Năm học</dt>
+            <dd class="col-sm-9">{{ $clubMember->academic_year ?: '-' }}</dd>
+            
+            <dt class="col-sm-3">Ghi chú</dt>
+            <dd class="col-sm-9">{{ $clubMember->note ?: '-' }}</dd>
+        </dl>
+    </div>
+</div>
 @endsection

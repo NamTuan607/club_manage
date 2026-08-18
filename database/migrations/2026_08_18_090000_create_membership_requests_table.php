@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng yêu cầu sinh viên xin tham gia câu lạc bộ.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

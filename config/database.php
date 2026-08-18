@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Cấu hình database của ứng dụng Laravel Club Management.
 
 use Illuminate\Support\Str;
 use Pdo\Mysql;

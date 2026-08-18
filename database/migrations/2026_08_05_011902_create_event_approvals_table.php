@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Migration tạo bảng lịch sử phê duyệt sự kiện.
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

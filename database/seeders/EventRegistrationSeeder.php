@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data cho đăng ký sự kiện của sinh viên.
 
 namespace Database\Seeders;
 

@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Mock data cho quy tắc cộng điểm hoạt động theo loại và tên sự kiện.
 
 namespace Database\Seeders;
 

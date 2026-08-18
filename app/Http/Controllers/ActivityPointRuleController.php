@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý CRUD quy tắc cộng điểm hoạt động theo loại hoặc tên sự kiện.
 
 namespace App\Http\Controllers;
 

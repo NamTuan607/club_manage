@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý CRUD câu lạc bộ, sức chứa, thành viên và thông tin liên quan.
 
 namespace App\Http\Controllers;
 

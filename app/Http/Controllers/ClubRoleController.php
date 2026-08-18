@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Quản lý các chức vụ/vai trò thuộc từng câu lạc bộ.
 
 namespace App\Http\Controllers;
 

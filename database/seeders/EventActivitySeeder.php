@@ -1,4 +1,5 @@
 <?php
+# Vai trò: Seeder bổ trợ mô phỏng đăng ký, check-in, điểm và chứng nhận cho sự kiện.
 
 namespace Database\Seeders;
 
